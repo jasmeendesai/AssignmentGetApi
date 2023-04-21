@@ -47,10 +47,48 @@ router.get('/students/:studentName', function(req, res) {
     //res.send({data: studentDetails})
     res.send('student data')
 })
-
+const movies=['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
 router.get('/movies',function(req,res){
-    res.send(['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins'])
+    res.send(movies)
 })
+
+router.get('/movies/:indexNumber', function(req,res){
+    // console.log(movies[req.params.indexNumber])
+    const a=req.params.indexNumber
+    if(a>movies.length||a<0){
+        console.log("use a valid index");
+    }else{
+        console.log(movies[a]);
+    }
+
+})
+
+const films = [ {
+    id: 1,
+    name: "The Shining"
+   }, {
+    id: 2,
+    name: "Incendies"
+   }, {
+    id: 3,
+    name: "Rang de Basanti"
+   }, {
+    id: 4,
+    name: "Finding Nemo"
+   }]
+   router.get('/films',function(req,res){
+    res.send(films)
+   })
+
+   router.get('/films/:filmId',function(req,res){
+    const a=req.params.filmId
+    if(a>films.length||a<0){
+        console.log("No movie exists with this id");
+    }else{
+        console.log(films[a]);
+    }
+   })
+   
 
 
 module.exports = router;
