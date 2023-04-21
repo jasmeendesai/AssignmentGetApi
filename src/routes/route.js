@@ -48,5 +48,9 @@ router.get('/students/:studentName', function(req, res) {
     res.send('student data')
 })
 
+router.get('/movies',function(req,res){
+    res.send(['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins'])
+})
+
 
 module.exports = router;
