@@ -87,7 +87,7 @@ router.post('/post-api1', function (req, res){
         }
         return person
     })
-    res.send({personsList})
+    
     const personWhoCanVote = [];
     personsList.map((person)=>{
         if(person.votingStatus === true){
@@ -95,6 +95,7 @@ router.post('/post-api1', function (req, res){
         }
     })
     res.status(200).json({success: true, listOfVoters : personWhoCanVote, eligiblePersons : personsList})
+    res.send({personsList})
 })
 
 module.exports = router;
