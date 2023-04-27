@@ -6,9 +6,10 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+// mongodb+srv://jasmeendesai2597:rPXecqr0CIWiUJC7@cluster0.t1jqljv.mongodb.net/Jasmeen
+// mongodb+srv://functionup-cohort:G0Loxqc9wFEGyEeJ@cluster0.rzotr.mongodb.net/Pritesh87698-DB?retryWrites=true&w=majority
 
-
-mongoose.connect("mongodb+srv://functionup-cohort:G0Loxqc9wFEGyEeJ@cluster0.rzotr.mongodb.net/Pritesh87698-DB?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://jasmeendesai2597:Uy1yQhrmV3pWAsYj@cluster0.wi2wctr.mongodb.net/Jasmeen-DB?retryWrites=true&w=majority", {
     useNewUrlParser: true
 })
 .then( () => console.log("MongoDb is connected"))
