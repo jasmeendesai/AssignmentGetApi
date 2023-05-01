@@ -20,7 +20,7 @@ const bookSchema = new mongoose.Schema( {
 }, { timestamps: true });
 
 
-module.exports = mongoose.model('BookData', bookSchema) //users
+module.exports = mongoose.model('BookData', bookSchema)
 
 //Validation:
 //require:true

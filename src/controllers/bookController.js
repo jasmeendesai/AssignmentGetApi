@@ -25,10 +25,7 @@ const getParticularBooks = async function (req, res) {
     let allBooks= await BookModel.find(data2)
     res.json({msg: allBooks})
 }
-// const getXINRBooks= async function (req, res) {
-//     // let data3 =req.body;
-//     let allBooks= await BookModel.find({$or: [{"price.indianPrice":"100INR"},{"price.indianPrice":"200INR"},{"price.indianPrice":"500INR"}]});
-//     res.send({msg: allBooks})
+
 
 // }
 const getXINRBooks= async function (req, res) {
