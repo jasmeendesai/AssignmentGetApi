@@ -1,47 +1,26 @@
-const { type } = require("express/lib/response")
 const UserModel= require("../models/userModel")
+const jwt = require("jsonwebtoken");
 
-
-
-
-const basicCode= async function(req, res) {
+// const basicCode= async function(req, res) {
     
-    let contentTypeHeader = req.headers.content-type
-    console.log("The headers received in this request are: ", req.headers)
-    console.log("The content type header is: ", contentTypeHeader)
+//     let contentTypeHeader = req.headers.content-type
+//     console.log("The headers received in this request are: ", req.headers)
+//     console.log("The content type header is: ", contentTypeHeader
 
+//     req.headers.month = "December"
+//     req.batch = "Californium"
 
-    req.headers.month = "December"
-    req.batch = "Californium"
+//     console.log("The headers modified from this request are: ", req.headers)
+//     // let tokenDataInHeaders= req.headers.token
+//     // console.log(tokenDataInHeaders)
+//     res.header("year", "2022")
+//     console.log( "HEADER DATA ABOVE")
+//     console.log( "hey man, congrats you have reached the Handler")
 
-    console.log("The headers modified from this request are: ", req.headers)
-    // let tokenDataInHeaders= req.headers.token
-    // console.log(tokenDataInHeaders)
-    res.header("year", "2022")
-    console.log( "HEADER DATA ABOVE")
-    console.log( "hey man, congrats you have reached the Handler")
-
-    console.log("The request object looks like this: ", req)
-    res.send({ msg: "This is coming from controller (handler)"})
+//     console.log("The request object looks like this: ", req)
+//     res.send({ msg: "This is coming from controller (handler)"})
     
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//     }
 
 
 const createUser= async function (req, res) {
@@ -50,11 +29,49 @@ const createUser= async function (req, res) {
     res.send({msg: savedData})
 }
 
-const getUsersData= async function (req, res) {
-    let allUsers= await UserModel.find()
-    res.send({msg: allUsers})
+const userlogin= async function (req, res) {
+    const userName = req.body.emailId;
+    const password = req.body.password;
+    const user = await UserModel.findOne({emailId : userName, password : password})
+    if(!user){
+        return res.send({status : false, msg : "username or the password is not correct"})
+    }
+    const token = jwt.sign({userId : user._id.toString()}, 'functionUp-technetium');
+    // console.log(token);
+    res.setHeader("x-auth-header",token)
+    // console.log(res.header["x-auth-header"]);
+    res.send({status : true, data:{token:token}});
 }
 
+const getUser= async function (req, res) {
+    const userId = req.params.userId;
+    const userdetail= await UserModel.findById(userId);
+    res.send({status : true, data: {userdetail}});
+}
+const updateUser= async function (req, res) {
+    const userId = req.params.userId;
+    const data= req.body;
+    const userdetail= await UserModel.findById(userId);
+    if(!userdetail) return res.send({msg :"User not found"})
+
+    const updatedUser= await UserModel.findOneAndUpdate({_id:userId},data,{new : true})
+    
+    res.send({updatedUser})
+}
+
+const deleteUser= async function (req, res) {
+    const userId = req.params.userId;
+ 
+    const userdetail= await UserModel.findById(userId);
+    if(!userdetail) return res.send({msg :"User not found"})
+
+    const updatedUser= await UserModel.findOneAndUpdate({_id:userId},{$set :{isDeleted : true}},{new : true})
+    
+    res.send({updatedUser})
+}
 module.exports.createUser= createUser
-module.exports.getUsersData= getUsersData
-module.exports.basicCode= basicCode
+module.exports.userlogin= userlogin
+module.exports.getUser= getUser
+module.exports.updateUser=updateUser
+module.exports.deleteUser=deleteUser
+

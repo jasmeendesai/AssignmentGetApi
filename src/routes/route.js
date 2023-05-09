@@ -2,14 +2,15 @@ const express = require('express');
 const router = express.Router();
 // const UserModel= require("../models/userModel.js")
 const UserController= require("../controllers/userController")
-const BookController= require("../controllers/bookController")
-const commonMW = require ("../middlewares/commonMiddlewares")
+const validation = require("../middlewares/commonMiddlewares")
 
-router.get("/test-me", function (req, res) {
-    res.send("My first ever api!")
-})
+// const commonMW = require ("../middlewares/commonMiddlewares")
 
-router.post("/createBook", commonMW.abc, BookController.createBook  )
-router.post("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.abc, UserController.basicCode, commonMW.mid4)
 
+
+router.post("/createUser",  UserController.createUser)
+router.post("/userlogin",  UserController.userlogin)
+router.get("/getUser/:userId", validation.headerValidation, UserController.getUser)
+router.put("/updateUser/:userId", validation.headerValidation,  UserController.updateUser)
+router.delete("/deleteUser/:userId", validation.headerValidation, UserController.deleteUser)
 module.exports = router;
