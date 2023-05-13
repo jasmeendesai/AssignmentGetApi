@@ -12,11 +12,11 @@ const createUser= async function (req, res) {
 const userlogin= async function (req, res) {
     const userName = req.body.emailId;
     const password = req.body.password;
-    const user = await UserModel.findOne({emailId : userName, password : password})
+    const user = await UserModel.findOne({emailId : userName, password : password}) // object or null
     if(!user){
         return res.send({status : false, msg : "username or the password is not correct"})
     }
-    const token = jwt.sign({userId : user._id.toString()}, 'functionUp-technetium');
+    const token = jwt.sign({userId : user._id.toString()}, 'functionUp-tech');
     // console.log(token);
     res.setHeader("x-auth-header",token)
     // console.log(res.header["x-auth-header"]);
